@@ -1,0 +1,8 @@
+# pacman — Pacman packages with pending updates, self-sourced from `pacman -Qu`.
+! pacman -Qu every 10s
+list .pacman
+source .pacman { in }
+text .n
+source .n { in; count }
+grid .n -row 1 -col 0
+grid .pacman -row 0 -col 0
