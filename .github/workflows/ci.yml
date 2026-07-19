@@ -1,0 +1,19 @@
+name: CI
+on:
+  push:
+  pull_request:
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install arb
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release download --repo MenkeTechnologies/arb \
+            --pattern "*x86_64-unknown-linux-gnu.tar.gz" --output arb.tar.gz --clobber
+          tar xzf arb.tar.gz && chmod +x arb
+      - name: Validate arb specs
+        run: |
+          for f in *.arb; do echo "== $f =="; ./arb --check "$f"; done
